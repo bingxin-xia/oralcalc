@@ -185,7 +185,7 @@ var app = new Vue({
 		is_login: false,
 		count: 100,
 		pagerows: 25,
-		cols: 4,
+		cols: 2,
 
 		strategy: 'random',
 		diff_operator_adjacent: false,
@@ -193,8 +193,8 @@ var app = new Vue({
 
 		isadd: true,
 		issub: true,
-		ismul: true,
-		isdiv: true,
+		ismul: false,
+		isdiv: false,
 		level: '20',
 		rule: '1',
 		whichcond: '',
@@ -207,12 +207,12 @@ var app = new Vue({
 		range_op: [],
 
 		// 加法
-		defrange_add: [{min: 0, max: 100}, {min: 0, max: 100}],
-		result_add: {min: 0, max: 200},
+		defrange_add: [{min: 1, max: 100}, {min: 1, max: 100}],
+		result_add: {min: 0, max: 100},
 		range_add: [],
 
 		// 减法
-		defrange_sub: [{min: 0, max: 200}, {min: 0, max: 100}],
+		defrange_sub: [{min: 1, max: 100}, {min: 1, max: 100}],
 		result_sub: {min: 0, max: 100},
 		range_sub: [],
 
@@ -247,7 +247,7 @@ var app = new Vue({
 		}
 	},
 	created: function () {
-		this.itemcount = 3;
+		this.itemcount = 2;
 		this.is_login = this.curr_user() ? true : false;
 		this.myCounter();
 	},
