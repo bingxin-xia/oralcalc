@@ -188,6 +188,7 @@ var app = new Vue({
 		cols: 2,
 
 		strategy: 'random',
+		non_parentheses: true,
 		diff_operator_adjacent: false,
 		dissimilarity_operator_adjacent: true,
 
@@ -199,7 +200,7 @@ var app = new Vue({
 		rule: '1',
 		whichcond: '',
 		exact_parentheses: false,
-		parentheses: {autofix: true, enabled: false, min: 0, max: 0}, // 是否生成带括号的题
+		parentheses: {autofix: false, enabled: false, min: 0, max: 0}, // 是否生成带括号的题
 
 		itemcount: 0,
 
@@ -290,7 +291,6 @@ var app = new Vue({
 			}
 			if (val > 2) {
 				this.parentheses.enabled = true;
-				if (this.parentheses.min < 0) this.parentheses.min = 0;
 				if (this.parentheses.max < 0) this.parentheses.max = 0;
 				if (this.parentheses.max > val - 1) this.parentheses.max = val - 1;
 				if (this.parentheses.min > this.parentheses.max) this.parentheses.max = this.parentheses.max;
@@ -1395,8 +1395,12 @@ var app = new Vue({
 			for (var i = items.length - 1; i >= 0; i--) {
 				op = ChineseOP[items[i].operator];
 				// 最外层不加括号
-				head = 0 == i ? '' : '('; 
-				tail = 0 == i ? '' : ')';
+				if (this.non_parentheses) {
+					head = tail = ''; 
+				} else {
+					head = 0 == i ? '' : '('; 
+					tail = 0 == i ? '' : ')';
+				}
 				if( i > 0 && this.parentheses.autofix ) {
 					// 自动去掉无意义的括号
 					if( '+*'.indexOf(items[i].operator) >= 0 && items[i].operator == items[i - 1].operator ) {
